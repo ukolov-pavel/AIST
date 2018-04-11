@@ -1,0 +1,2 @@
+﻿phone, expected_result, test_data_set_number
+123456789,"Некорректное значение поля Мобильный телефон",1

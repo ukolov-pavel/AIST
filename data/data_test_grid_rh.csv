@@ -1,0 +1,4 @@
+query, expected_color, test_data_set_number
+"select top(1) PerC.UniqueId Ent, '-' OR1 from PersonCards PerC where PerC.IsDeleted != 1 and PerC.RH = '-1'","#C4E19D",1
+"select top(1) PerC.UniqueId Ent, '+' OR1 from PersonCards PerC where PerC.IsDeleted != 1 and PerC.RH = '1'","#000000",2
+"select top(1) PerC.UniqueId Ent, '' OR1 from PersonCards PerC where PerC.IsDeleted != 1 and PerC.RH is null","#D8D6D3",3

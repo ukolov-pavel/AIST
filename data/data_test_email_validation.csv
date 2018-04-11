@@ -1,0 +1,3 @@
+email, expected_result, test_data_set_number
+123456789-1234567890123456789@ПочтаMail.qwertyuiop,123456789-1234567890123456789@ПочтаMail.qwertyuiop,1
+12345678901234567890123456789@yoursmail.qwertyuiopa,12345678901234567890123456789@yoursmail.qwertyuiop,2

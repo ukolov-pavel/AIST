@@ -1,0 +1,4 @@
+expected_color, expected_type, test_data_set_number
+#0070C0,Временный,1
+#FF0000,Абсолютный,2
+#FFFF66,Контроль,3

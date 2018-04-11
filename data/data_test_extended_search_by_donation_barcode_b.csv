@@ -1,0 +1,5 @@
+query, test_data_set_number
+"select top (1) PerC.UniqueId, '=7' + substring(Don.Barcode, 4, 4) Ent from PersonCards PerC join Donations Don on PerC.UniqueId = Don.DonorId",13
+"select top (1) PerC.UniqueId, substring(Don.Barcode, 6, 6) Ent from PersonCards PerC join Donations Don on PerC.UniqueId = Don.DonorId",14
+"select top (1) PerC.UniqueId, substring(Don.Barcode, 3, 9) Ent from PersonCards PerC join Donations Don on PerC.UniqueId = Don.DonorId",15
+"select top (1) PerC.UniqueId, Don.Barcode Ent from PersonCards PerC join Donations Don on PerC.UniqueId = Don.DonorId",16

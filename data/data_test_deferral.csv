@@ -1,0 +1,3 @@
+deferral_system_name, expected_result, test_data_set_number
+а прием алкоголя,прием алкогОля,1
+а прием аЛкоГоля,прием алкоголя,2

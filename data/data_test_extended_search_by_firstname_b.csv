@@ -1,0 +1,3 @@
+query, test_data_set_number
+"select top (1) PerC.UniqueId, PerC.FirstName Ent from PersonCards PerC where PerC.IsDeleted != 1 and PerC.FirstName not like '%[a-zA-Z0-9?!_+=*\/%()}{<>^]%' and len(PerC.FirstName) > 5 order by PerC.Birthdate desc",10
+"select top (1) PerC.UniqueId, substring(PerC.FirstName, 2, len(PerC.FirstName)-2) Ent from PersonCards PerC where PerC.IsDeleted != 1 and PerC.FirstName not like '%[a-zA-Z0-9?!_+=*\/%()}{<>^]%' and len(PerC.FirstName) > 7 order by PerC.Birthdate desc",11

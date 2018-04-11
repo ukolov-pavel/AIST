@@ -1,0 +1,4 @@
+query, expected_result, test_data_set_number
+"select top(1) PerC.UniqueId Ent from PersonCards PerC where PerC.IsDeleted != 1 and PerC.Gender = 1","М",1
+"select top(1) PerC.UniqueId Ent from PersonCards PerC where PerC.IsDeleted != 1 and PerC.Gender = 2","Ж",2
+"select top(1) PerC.UniqueId Ent from PersonCards PerC where PerC.IsDeleted != 1 and PerC.Gender not in (1, 2)","",3

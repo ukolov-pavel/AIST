@@ -1,0 +1,8 @@
+query, expected_color, expected_text_color, test_data_set_number
+"select top(1) PerC.UniqueId Ent, '' OR1 from PersonCards PerC where PerC.IsDeleted != 1 and PerC.Kell is null","#D8D6D3","#FFFFFF",1
+"select top(1) PerC.UniqueId Ent, '-' OR1 from PersonCards PerC where PerC.IsDeleted != 1 and PerC.Kell = '-1' and PerC.Chellano is null","#000000","#000000",2
+"select top(1) PerC.UniqueId Ent, '-' OR1 from PersonCards PerC where PerC.IsDeleted != 1 and PerC.Kell = '-1' and PerC.Chellano = '-1'","#000000","#000000",3
+"select top(1) PerC.UniqueId Ent, '-+' OR1 from PersonCards PerC where PerC.IsDeleted != 1 and PerC.Kell = '-1' and PerC.Chellano = '1'","#000000","#000000",4
+"select top(1) PerC.UniqueId Ent, '+' OR1 from PersonCards PerC where PerC.IsDeleted != 1 and PerC.Kell = '1' and PerC.Chellano is null","#E85E53","#FFFFFF",5
+"select top(1) PerC.UniqueId Ent, '+-' OR1 from PersonCards PerC where PerC.IsDeleted != 1 and PerC.Kell = '1' and PerC.Chellano = '-1'","#E85E53","#FFFFFF",6
+"select top(1) PerC.UniqueId Ent, '++' OR1 from PersonCards PerC where PerC.IsDeleted != 1 and PerC.Kell = '1' and PerC.Chellano = '1'","#E85E53","#FFFFFF",7

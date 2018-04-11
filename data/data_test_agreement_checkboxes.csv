@@ -1,0 +1,5 @@
+is_agree_persional_data_processing, is_message_agree, expected_result1, expected_result2, test_data_set_number
+true,true,true,true,1
+false,false,false,false,2
+true,false,true,false,3
+false,true,false,true,4

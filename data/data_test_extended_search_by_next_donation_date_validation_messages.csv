@@ -1,0 +1,2 @@
+next_donation_date_from, next_donation_date_to, expected_result, test_data_set_number
+03.05.2017,02.05.2017,"Задайте верные параметры поиска по дате следующей донации",1

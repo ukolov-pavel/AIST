@@ -1,0 +1,3 @@
+gender, query, test_data_set_number
+Мужской,"select top (1) PerC.UniqueId from PersonCards PerC where PerC.IsDeleted != 1 and PerC.Gender = 1 order by PerC.BirthDate desc",3
+Женский,"select top (1) PerC.UniqueId from PersonCards PerC where PerC.IsDeleted != 1 and PerC.Gender = 2 order by PerC.BirthDate desc",4

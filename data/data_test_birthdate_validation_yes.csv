@@ -1,0 +1,4 @@
+birthdate, test_data_set_number
+today - sys_min_age + one_day,1
+today - sys_min_age + one_year,2
+today,3

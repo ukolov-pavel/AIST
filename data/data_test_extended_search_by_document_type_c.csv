@@ -1,0 +1,2 @@
+document_type, query, test_data_set_number
+"Паспорт РФ","select top (1) PerC.UniqueId from PersonCards PerC join IdentityDocs IDoc on PerC.IdentityDocId = IDoc.UniqueId where PerC.IsDeleted != 1 and IDoc.DocType = 1 order by PerC.BirthDate desc",3

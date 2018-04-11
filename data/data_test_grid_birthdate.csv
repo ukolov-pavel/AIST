@@ -1,0 +1,5 @@
+query, test_data_set_number
+"select top(1) PerC.UniqueId Ent, convert(varchar, PerC.BirthDate, 104) OR1 from PersonCards PerC where PerC.IsDeleted != 1 and PerC.BirthDateIsUndefined = 0 and PerC.BirthDate < getdate()",1
+"select top(1) PerC.UniqueId Ent, convert(varchar, PerC.BirthDate, 104) OR1 from PersonCards PerC where PerC.IsDeleted != 1 and PerC.BirthDateIsUndefined = 0 and PerC.BirthDate > getdate()",2
+"select top(1) PerC.UniqueId Ent, '??.??.' + cast(year(PerC.BirthDate) as varchar(4)) OR1 from PersonCards PerC where PerC.IsDeleted != 1 and PerC.BirthDateIsUndefined = 1 and month(PerC.BirthDate) != 1",3
+"select top(1) PerC.UniqueId Ent, '??.??.' + cast(year(PerC.BirthDate) as varchar(4)) OR1 from PersonCards PerC where PerC.IsDeleted != 1 and PerC.BirthDateIsUndefined = 1 and month(PerC.BirthDate) = 1",4

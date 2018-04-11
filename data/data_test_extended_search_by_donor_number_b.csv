@@ -1,0 +1,2 @@
+query, test_data_set_number
+"select top (1) PerC.UniqueId Ent from PersonCards PerC join IdentityDocs IDoc on IDoc.UniqueId = PerC.IdentityDocId where convert(nvarchar(10), PerC.UniqueId) not in (select IDoc.Number from IdentityDocs IDoc) and PerC.IsDeleted != 1",4

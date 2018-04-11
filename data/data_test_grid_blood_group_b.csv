@@ -1,0 +1,19 @@
+query, expected_color, test_data_set_number
+"select top(1) PerC.UniqueId Ent, 'O' OR1 from PersonCards PerC where PerC.IsDeleted != 1 and BloodGroup = 1","#FCDEAE",20
+"select top(1) PerC.UniqueId Ent, 'A' OR1 from PersonCards PerC where PerC.IsDeleted != 1 and BloodGroup = 2 and len(GrA) = 0 and len(GrB) = 0","#8BCFE1",21
+"select top(1) PerC.UniqueId Ent, 'A' OR1 from PersonCards PerC where PerC.IsDeleted != 1 and BloodGroup = 2 and GrA = 'NONE'","#8BCFE1",22
+"select top(1) PerC.UniqueId Ent, 'A2' OR1 from PersonCards PerC where PerC.IsDeleted != 1 and BloodGroup = 2 and GrA = 'A2'","#8BCFE1",23
+"select top(1) PerC.UniqueId Ent, 'A3' OR1 from PersonCards PerC where PerC.IsDeleted != 1 and BloodGroup = 2 and GrA = 'A3'","#8BCFE1",24
+"select top(1) PerC.UniqueId Ent, 'An' OR1 from PersonCards PerC where PerC.IsDeleted != 1 and BloodGroup = 2 and GrA = 'AN'","#8BCFE1",25
+"select top(1) PerC.UniqueId Ent, 'B' OR1 from PersonCards PerC where PerC.IsDeleted != 1 and BloodGroup = 3 and (len(GrA) = 0 or GrA is null) and (len(GrB) = 0 or GrB is null)","#F3ADA7",26
+"select top(1) PerC.UniqueId Ent, 'B' OR1 from PersonCards PerC where PerC.IsDeleted != 1 and BloodGroup = 3 and GrA = 'NONE' and (len(GrB) = 0 or GrB is null)","#F3ADA7",27
+"select top(1) PerC.UniqueId Ent, 'Bn' OR1 from PersonCards PerC where PerC.IsDeleted != 1 and BloodGroup = 3 and (len(GrA) = 0 or GrA is null) and GrB = 'BN'","#F3ADA7",28
+"select top(1) PerC.UniqueId Ent, 'AB' OR1 from PersonCards PerC where PerC.IsDeleted != 1 and BloodGroup = 4 and (len(GrA) = 0 or GrA is null) and (len(GrB) = 0 or GrB is null)","#FBDC61",29
+"select top(1) PerC.UniqueId Ent, 'AB' OR1 from PersonCards PerC where PerC.IsDeleted != 1 and BloodGroup = 4 and GrA = 'NONE' and (len(GrB) = 0 or GrB is null)","#FBDC61",30
+"select top(1) PerC.UniqueId Ent, 'A2B' OR1 from PersonCards PerC where PerC.IsDeleted != 1 and BloodGroup = 4 and GrA = 'A2' and (len(GrB) = 0 or GrB is null)","#FBDC61",31
+"select top(1) PerC.UniqueId Ent, 'A3B' OR1 from PersonCards PerC join IdentityDocs IDoc on PerC.IdentityDocId = IDoc.UniqueId where PerC.IsDeleted != 1 and BloodGroup = 4 and GrA = 'A3' and (len(GrB) = 0 or GrB is null)","#FBDC61",32
+"select top(1) PerC.UniqueId Ent, 'AnB' OR1 from PersonCards PerC where PerC.IsDeleted != 1 and BloodGroup = 4 and GrA = 'AN' and (len(GrB) = 0 or GrB is null)","#FBDC61",33
+"select top(1) PerC.UniqueId Ent, 'A2Bn' OR1 from PersonCards PerC where PerC.IsDeleted != 1 and BloodGroup = 4 and GrA = 'A2' and GrB = 'BN'","#FBDC61",34
+"select top(1) PerC.UniqueId Ent, 'A3Bn' OR1 from PersonCards PerC where PerC.IsDeleted != 1 and BloodGroup = 4 and GrA = 'A3' and GrB = 'BN'","#FBDC61",35
+"select top(1) PerC.UniqueId Ent, 'AnBn' OR1 from PersonCards PerC where PerC.IsDeleted != 1 and BloodGroup = 4 and GrA = 'AN' and GrB = 'BN'","#FBDC61",36
+"select top(1) PerC.UniqueId Ent, 'ABn' OR1 from PersonCards PerC where PerC.IsDeleted != 1 and BloodGroup = 4 and (len(GrA) = 0 or GrA is null) and GrB = 'BN'","#FBDC61",37

@@ -1,0 +1,5 @@
+query, test_data_set_number
+"select top(1) PerC.UniqueId Ent, rtrim(PerAd.PlaneAddress) OR1 from PersonCards PerC join PersonAddresses PerAd on PerC.FactAddressId = PerAd.UniqueId where PerC.IsDeleted != 1 and PerC.FactAddressIsInactive != 1 and PerAd.FiasRegionId is not null and len(PerAd.PlaneAddress) > 0 and PerAd.PlaneAddress not like '  '",1
+"select top(1) PerC.UniqueId Ent, rtrim(PerAd.PlaneAddress) OR1 from PersonCards PerC join PersonAddresses PerAd on PerC.FactAddressId = PerAd.UniqueId where PerC.IsDeleted != 1 and PerC.FactAddressIsInactive != 1 and PerAd.FiasRegionId is null and len(PerAd.PlaneAddress) > 0 and PerAd.PlaneAddress not like '  '",2
+"select top(1) PerC.UniqueId Ent, '' OR1 from PersonCards PerC where PerC.IsDeleted != 1 and PerC.FactAddressId is null",3
+"select top(1) PerC.UniqueId Ent, '' OR1 from PersonCards PerC where PerC.IsDeleted != 1 and PerC.FactAddressId is not null and PerC.FactAddressIsInactive = 1",4

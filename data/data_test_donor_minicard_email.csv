@@ -1,0 +1,5 @@
+query, expected_icon_presence, test_data_set_number
+"select top(1) PerC.UniqueId Ent, PerC.Email OR1 from PersonCards PerC where PerC.IsDeleted != 1 and len(PerC.Email) > 0",1
+"select top(1) PerC.UniqueId Ent, '' OR1 from PersonCards PerC where PerC.IsDeleted != 1 and PerC.Email is null",2
+"select top(1) PerC.UniqueId Ent, '' OR1 from PersonCards PerC where PerC.IsDeleted != 1 and len(PerC.Email) = 0",3
+"select top(1) PerC.UniqueId Ent, PerC.Email OR1 from PersonCards PerC where PerC.IsDeleted != 1 and len(PerC.Email) = 50",4
