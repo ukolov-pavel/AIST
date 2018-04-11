@@ -211,7 +211,7 @@ class TestNdpMovingBetweenPages(BaseTest):
 
 		assert aistium.get_text(elements=main_page.minicard_phone) == '123456788'
 
-		grid_donor_id = main_page.ndp_get_grid_values('№', 'active_cell')
+		grid_donor_id = main_page.get_grid_values('UniqueId', 'active_cell', main_page.main_grid)
 
 		donors_card_title_page = DonorsCardTitle(grid_donor_id)
 

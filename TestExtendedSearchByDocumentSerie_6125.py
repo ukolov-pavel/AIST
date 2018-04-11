@@ -52,7 +52,7 @@ class TestExtendedSearchByDDocumentSerie(BaseTest):
 
 		main_page.loading_is_completed()
 
-		assert main_page.ndp_get_grid_values('№', ind) == donorid
+		assert main_page.get_grid_values(' UniqueId', ind, main_page.main_grid ) == donorid
 
 		assert main_page.number_of_entities_at_grid_including_hidden() == sql_query("select count ( * ) Q from PersonCards PerC join IdentityDocs IDoc on PerC.IdentityDocId = IDoc.UniqueId where PerC.IsDeleted != 1 and IDoc.Serie = '"+document_serie+"' and cast(IDoc.DocType as varchar) like case when '"+document_type+"' = '' then '%' when '"+document_type+"' = 'Паспорт РФ' then '1' when '"+document_type+"' = 'Военный билет' then '2' when '"+document_type+"' = 'Загранпаспорт РФ' then '3' when '"+document_type+"' = 'Паспорт СССР' then '4' when '"+document_type+"' = 'Иные документы' then '5' when '"+document_type+"' = 'Св-во о рождении' then '6' end")[0][0]
 

@@ -29,9 +29,9 @@ class TestGridRh(BaseTest):
 
 		ind = sql_query("select Main.Nmb from (select row_number() over (order by PerC.BirthDate desc) Nmb, PerC.UniqueId from PersonCards PerC left join IdentityDocs IDoc on PerC.IdentityDocId = IDoc.UniqueId where PerC.IsDeleted != 1 and (PerC.UniqueId = '"+donorid+"' or IDoc.Number = '"+donorid+"')) Main where Main.UniqueId = '"+donorid+"'")[0][0]
 
-		assert main_page.ndp_get_grid_values('RH', ind) == rh
+		assert main_page.get_grid_values('Rh', ind, main_page.main_grid) == rh
 
-		assert convert_to_hex(main_page.ndp_get_grid_values('RH', ind, 'background-color')) == expected_color
+		assert convert_to_hex(main_page.get_grid_values('Rh', ind, main_page.main_grid, mode='background-color')) == expected_color
 
 if __name__ == "__main__":
 	pytest.main()

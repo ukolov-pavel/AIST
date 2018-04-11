@@ -34,7 +34,7 @@ class TestGridPhenotype(BaseTest):
 
 		ind = sql_query("select Main.Nmb from (select row_number() over (order by PerC.BirthDate desc) Nmb, PerC.UniqueId from PersonCards PerC left join IdentityDocs IDoc on PerC.IdentityDocId = IDoc.UniqueId where PerC.IsDeleted != 1 and (PerC.UniqueId = '"+donorid+"' or IDoc.Number = '"+donorid+"')) Main where Main.UniqueId = '"+donorid+"'")[0][0]
 
-		assert main_page.ndp_get_grid_values('Фенотип', ind) == phenotype
+		assert main_page.get_grid_values('Phenotype', ind, main_page.main_grid) == phenotype
 
 
 	@allure.step('МД. Отображение поля Фенотип в гриде (регистратура донорского отделения) - выставить флаг для настройки "Краткая форма (буквенная) для отображения фенотипа"')
@@ -62,7 +62,7 @@ class TestGridPhenotype(BaseTest):
 
 		ind = sql_query("select Main.Nmb from (select row_number() over (order by PerC.BirthDate desc) Nmb, PerC.UniqueId from PersonCards PerC left join IdentityDocs IDoc on PerC.IdentityDocId = IDoc.UniqueId where PerC.IsDeleted != 1 and (PerC.UniqueId = '"+donorid+"' or IDoc.Number = '"+donorid+"')) Main where Main.UniqueId = '"+donorid+"'")[0][0]
 
-		assert main_page.ndp_get_grid_values('Фенотип', ind) == phenotype
+		assert main_page.get_grid_values('Phenotype', ind, main_page.main_grid) == phenotype
 
 	@allure.step('МД. Отображение поля Фенотип в гриде (регистратура донорского отделения) - выставить флаг для настройки "Краткая форма (буквенная) для отображения фенотипа", но значения фенотипа не должны измениться')
 	@pytest.mark.parametrize('query, test_data_set_number', get_data('data_test_grid_phenotype_c.csv'))
@@ -89,7 +89,7 @@ class TestGridPhenotype(BaseTest):
 
 		ind = sql_query("select Main.Nmb from (select row_number() over (order by PerC.BirthDate desc) Nmb, PerC.UniqueId from PersonCards PerC left join IdentityDocs IDoc on PerC.IdentityDocId = IDoc.UniqueId where PerC.IsDeleted != 1 and (PerC.UniqueId = '"+donorid+"' or IDoc.Number = '"+donorid+"')) Main where Main.UniqueId = '"+donorid+"'")[0][0]
 
-		assert main_page.ndp_get_grid_values('Фенотип', ind) == phenotype
+		assert main_page.get_grid_values('Phenotype', ind, main_page.main_grid) == phenotype
 
 
 if __name__ == "__main__":

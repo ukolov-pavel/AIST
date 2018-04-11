@@ -29,8 +29,12 @@ class DonorsModuleRegistryPage(AbstractBasePage, WebElement):
 	confirm_popup_no_btn = Finds(by=L['confirm_popup_no_btn'][1], value=L['confirm_popup_no_btn'][2])
 	confirm_popup_yes_btn = Finds(by=L['confirm_popup_yes_btn'][1], value=L['confirm_popup_yes_btn'][2])
 	deferrals_button = Find(by=L['deferrals_button'][1], value=L['deferrals_button'][2])
+	deferrals_grid = Find(by=L['deferrals_grid'][1], value=L['deferrals_grid'][2])
 	deferral_from_minicard = Find(by=L['deferral_from_minicard'][1], value=L['deferral_from_minicard'][2])
 	deferral_only_active_tick = Find(by=L['deferral_only_active_tick'][1], value=L['deferral_only_active_tick'][2])
+	diseases_button = Find(by=L['diseases_button'][1], value=L['diseases_button'][2])
+	diseases_grid = Find(by=L['diseases_grid'][1], value=L['diseases_grid'][2])
+	diseases_only_active = Find(by=L['diseases_only_active'][1], value=L['diseases_only_active'][2])
 	document_number_field_ndp = Find(by=L['document_number_field_ndp'][1], value=L['document_number_field_ndp'][2])
 	document_serie_field_ndp = Find(by=L['document_serie_field_ndp'][1], value=L['document_serie_field_ndp'][2])
 	document_type_select_field = Find(by=L['document_type_select_field'][1], value=L['document_type_select_field'][2])
@@ -63,6 +67,7 @@ class DonorsModuleRegistryPage(AbstractBasePage, WebElement):
 	last_name_field_ndp = Find(by=L['last_name_field_ndp'][1], value=L['last_name_field_ndp'][2])#здесь и далее: ndp - new_donor_popup
 	list_of_directed_button = Find(by=L['list_of_directed_button'][1], value=L['list_of_directed_button'][2])
 	local_cabinet_continue = Find(by=L['local_cabinet_continue'][1], value=L['local_cabinet_continue'][2])
+	main_grid = Find(by=L['main_grid'][1], value=L['main_grid'][2])
 	middle_name_field_ndp = Find(by=L['middle_name_field_ndp'][1], value=L['middle_name_field_ndp'][2])
 	minicard_address = Find(by=L['minicard_address'][1], value=L['minicard_address'][2])
 	minicard_email = Find(by=L['minicard_email'][1], value=L['minicard_email'][2])
@@ -139,15 +144,20 @@ class DonorsModuleRegistryPage(AbstractBasePage, WebElement):
 				time.sleep(1)
 				break
 
-	def ndp_get_grid_values(cls, column, row, mode='get_value'):
-		columns = Driver.get().find_element_by_id('main-block').find_elements_by_tag_name('th')
+	def get_grid_values(cls, column, row, grid, mode='get_value'):
+		columns = grid.find_elements_by_tag_name('th')
 		for i in columns:
-			if i.get_attribute('data-title') == column:
+			if i.get_attribute('data-field') == column:
 				ind = columns.index(i)
+		try:
+			ind
+		except:
+			raise Exception('Column with the name *' + column + '* does not exist')
+		tbody = grid.find_element_by_xpath("./div[contains(@class, 'k-grid-content')]//table/tbody")
 		if row != 'active_cell':
-			row = Driver.get().find_element_by_xpath("//div[contains(@class, 'k-virtual-scrollable-wrap')]/table/tbody").find_elements_by_tag_name('tr')[row-1]
+			row = tbody.find_elements_by_tag_name('tr')[row-1]
 		else:
-			row = Driver.get().find_element_by_class_name('k-state-selected')
+			row = tbody.find_element_by_class_name('k-state-selected')
 		Driver.get().switch_to.default_content()
 		Driver.get().execute_script("arguments[0].scrollIntoView();", row)
 		value = row.find_elements_by_tag_name('td')[ind]
@@ -168,8 +178,10 @@ class DonorsModuleRegistryPage(AbstractBasePage, WebElement):
 	def link_to_donor_card(cls):
 		return Driver.get().find_element_by_class_name('person-card-details-fio').get_attribute('href')
 
-	def number_of_entities_at_grid(cls):
-		return len(Driver.get().find_element_by_xpath("//div[contains(@class, 'k-virtual-scrollable-wrap')]/table/tbody").find_elements_by_tag_name('tr'))
+	def number_of_entities_at_grid(cls, grid):
+		tbody = grid.find_element_by_xpath("./div[contains(@class, 'k-grid-content')]//table/tbody")
+		rows = tbody.find_elements_by_tag_name('tr')
+		return len(rows)
 
 	def number_of_entities_at_grid_including_hidden(cls):
 		return int(Driver.get().find_element_by_class_name('titleHeader.pageTitle').text.replace('Регистратура донорского отделения (', '')[:-1])
@@ -673,7 +685,7 @@ class DonorsModuleRegistryPage(AbstractBasePage, WebElement):
 		Driver.get().execute_script('$("#step2 > div:nth-child(16) > div:nth-child(1) > span:nth-child(1) > span:nth-child(1) > input:nth-child(1)").focusout();')
 
 	def is_deferral_type_field_disabled(cls):
-		return Driver.get().find_element(L[ndp_deferral_type][1], L[ndp_deferral_type][2]).get_attribute('disabled'), Driver.get().find_element(L[ndp_deferral_type][1], L[ndp_deferral_type][2]).get_attribute('readonly')
+		return Driver.get().find_element(L['ndp_deferral_type'][1], L['ndp_deferral_type'][2]).get_attribute('disabled'), Driver.get().find_element(L[ndp_deferral_type][1], L[ndp_deferral_type][2]).get_attribute('readonly')
 
 	def ndp_filling_deferral(cls, deferral_name, mode='correct_input'):
 		WebDriverWait(Driver.get(), 10).until(EC.visibility_of(cls.ndp_deferral_field))
@@ -851,3 +863,9 @@ class DonorsModuleRegistryPage(AbstractBasePage, WebElement):
 
 	def minicard_get_job_place(cls):#*********2.43 version only
 		return Driver.get().execute_script('return arguments[0].nextSibling.nodeValue.trim()', Driver.get().find_element(by=L['minicard_job_place_label'][1], value=L['minicard_job_place_label'][2]))
+
+	def get_diseases_only_active_value(cls):
+		if Driver.get().find_element(L['diseases_only_active'][1], value=L['diseases_only_active'][2]).get_attribute("checked") == 'true':
+			return 'true'
+		else:
+			return 'false'

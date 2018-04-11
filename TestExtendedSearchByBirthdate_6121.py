@@ -78,7 +78,7 @@ class TestExtendedSearchByBirthdate(BaseTest):
 
 		main_page.loading_is_completed()
 
-		#assert main_page.ndp_get_grid_values('№', ind) == donorid
+		#assert main_page.get_grid_values('UniqueId', ind, main_page.main_grid) == donorid
 
 		assert main_page.number_of_entities_at_grid_including_hidden() == sql_query("select count ( * ) Q from PersonCards PerC where PerC.IsDeleted != 1 and PerC.BirthDate between case when '"+birthdate_from+"' = '' then '01.01.1753' else '"+birthdate_from+"' end and case when '"+birthdate_to+"' = '' then '31.12.9999' else '"+birthdate_to+"' end")[0][0]
 

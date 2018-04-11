@@ -103,7 +103,7 @@ class TestExtendedSearch(BaseTest):
 
 		main_page.loading_is_completed()
 
-		assert main_page.ndp_get_grid_values('№', 'active_cell') == donorid
+		assert main_page.get_grid_values('UniqueId', 'active_cell', main_page.main_grid) == donorid
 
 		main_page.extended_search_click('open')
 
@@ -113,7 +113,7 @@ class TestExtendedSearch(BaseTest):
 
 		assert main_page.is_extended_search_closed() == True
 
-		assert main_page.ndp_get_grid_values('Документ', 1).split(' ')[-1] == document_number
+		assert main_page.get_grid_values('Document', 1, main_page.main_grid).split(' ')[-1] == document_number
 
 		main_page.extended_search_click('open')
 

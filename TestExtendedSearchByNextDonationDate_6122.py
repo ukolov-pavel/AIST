@@ -79,7 +79,7 @@ class TestExtendedSearchByNextDonationDate(BaseTest):
 
 		main_page.loading_is_completed()
 
-		#assert main_page.ndp_get_grid_values('№', ind) == donorid
+		#assert main_page.get_grid_values('UniqueId', ind, main_page.main_grid) == donorid
 
 		assert main_page.number_of_entities_at_grid_including_hidden() == sql_query("select count(distinct PerC.UniqueId) Q from PersonCards PerC join AppointedDonationTypes ApD on PerC.UniqueId = ApD.DonorId join (select ApD.DonorId, max(ApD.DonationDate) DD from AppointedDonationTypes ApD group by ApD.DonorId) ApDMax on ApD.DonorId = ApDMax.DonorId and ApD.DonationDate = ApDMax.DD where PerC.IsDeleted != 1 and ApD.NextDonationDate between case when '"+next_donation_date_from+"' = '' then '01.01.1753' else '"+next_donation_date_from+"' end and case when '"+next_donation_date_to+"' = '' then '31.12.9999' else '"+next_donation_date_to+"' end")[0][0]
 

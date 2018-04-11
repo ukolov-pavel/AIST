@@ -78,7 +78,7 @@ class TestDonorsCreationAllFields(BaseTest):
 
 		assert aistium.get_text(elements=main_page.fio_minicard) == 'Петров Константин Семенович'
 
-		assert main_page.ndp_get_grid_values('ФИО', 1) == 'Петров Константин Семенович'
+		assert main_page.get_grid_values('Fio', 1, main_page.main_grid) == 'Петров Константин Семенович'
 
 		assert aistium.get_value(locators_list=locators, element_name='quick_search_field') == 'Петров Константин Семенович'
 
@@ -100,7 +100,7 @@ class TestDonorsCreationAllFields(BaseTest):
 
 		assert main_page.get_accurate_address() == '111141, Москва г, Перова Поля 3-й проезд, д.21, корп.366, стр.16, кв. 80'
 
-		grid_donor_id = main_page.ndp_get_grid_values('№', 'active_cell')
+		grid_donor_id = main_page.get_grid_values('UniqueId', 'active_cell', main_page.main_grid)
 
 		donors_card_title_page = DonorsCardTitle(grid_donor_id)
 

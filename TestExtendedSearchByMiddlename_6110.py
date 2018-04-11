@@ -48,7 +48,7 @@ class TestExtendedSearchByMiddlename(BaseTest):
 
 		main_page.loading_is_completed()
 
-		assert main_page.ndp_get_grid_values('№', ind) == donorid
+		assert main_page.get_grid_values('UniqueId', ind, main_page.main_grid) == donorid
 
 		assert main_page.number_of_entities_at_grid_including_hidden() == sql_query("select count ( * ) Q from PersonCards PerC where PerC.IsDeleted != 1 and PerC.MiddleName like '%"+middlename+"%'")[0][0]
 

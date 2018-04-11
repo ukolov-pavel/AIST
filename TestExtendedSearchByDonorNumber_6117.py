@@ -44,7 +44,7 @@ class TestExtendedSearchByDonorNumber(BaseTest):
 
 		main_page.loading_is_completed()
 
-		assert main_page.ndp_get_grid_values('№', 1) == number
+		assert main_page.get_grid_values('UniqueId', 1, main_page.main_grid) == number
 
 		assert main_page.number_of_entities_at_grid_including_hidden() == 1
 

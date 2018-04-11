@@ -38,7 +38,7 @@ class TestValidationMessagesOfDonorsDirection(BaseTest):
 
 		ind = sql_query("select Main.Nmb from (select row_number() over (order by PerC.BirthDate desc) Nmb, PerC.UniqueId from PersonCards PerC left join IdentityDocs IDoc on PerC.IdentityDocId = IDoc.UniqueId where PerC.IsDeleted != 1 and (PerC.UniqueId = '"+donorid+"' or IDoc.Number = '"+donorid+"')) Main where Main.UniqueId = '"+donorid+"'")[0][0]
 
-		main_page.ndp_get_grid_values('№', ind, 'click')
+		main_page.get_grid_values('UniqueId', ind, main_page.main_grid, mode='click')
 
 		main_page.loading_is_completed()
 

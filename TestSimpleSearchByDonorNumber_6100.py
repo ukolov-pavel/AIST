@@ -24,7 +24,7 @@ class TestSimpleSearchByDonorNumber(BaseTest):
 
 		main_page.loading_is_completed()
 
-		assert main_page.ndp_get_grid_values('№', 'active_cell') == donor_number
+		assert main_page.get_grid_values('UniqueId', 'active_cell', main_page.main_grid) == donor_number
 
 if __name__ == "__main__":
 	pytest.main()

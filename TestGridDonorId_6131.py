@@ -29,7 +29,7 @@ class TestGridDonorId(BaseTest):
 
 		ind = sql_query("select Main.Nmb from (select row_number() over (order by PerC.BirthDate desc) Nmb, PerC.UniqueId from PersonCards PerC where PerC.IsDeleted != 1 and PerC.LastName like '"+lastname+"%' and PerC.FirstName like '"+firstname+"%' and PerC.MiddleName like '"+middlename+"%') Main where Main.UniqueId = "+donor_id)[0][0]
 
-		assert main_page.ndp_get_grid_values('№', ind) == donor_id
+		assert main_page.get_grid_values('UniqueId', ind, main_page.main_grid) == donor_id
 
 if __name__ == "__main__":
 	pytest.main()

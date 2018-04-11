@@ -29,11 +29,11 @@ class TestGridKell(BaseTest):
 
 		ind = sql_query("select Main.Nmb from (select row_number() over (order by PerC.BirthDate desc) Nmb, PerC.UniqueId from PersonCards PerC left join IdentityDocs IDoc on PerC.IdentityDocId = IDoc.UniqueId where PerC.IsDeleted != 1 and (PerC.UniqueId = '"+donorid+"' or IDoc.Number = '"+donorid+"')) Main where Main.UniqueId = '"+donorid+"'")[0][0]
 
-		assert main_page.ndp_get_grid_values('Kell', ind) == kell
+		assert main_page.get_grid_values('Kell', ind) == kell
 
-		assert convert_to_hex(main_page.ndp_get_grid_values('Kell', ind, 'background-color')) == expected_color
+		assert convert_to_hex(main_page.get_grid_values('Kell', ind, main_page.main_grid, mode='background-color')) == expected_color
 
-		assert convert_to_hex(main_page.ndp_get_grid_values('Kell', ind, 'color')) == expected_text_color
+		assert convert_to_hex(main_page.get_grid_values('Kell', ind, main_page.main_grid, mode='color')) == expected_text_color
 
 if __name__ == "__main__":
 	pytest.main()

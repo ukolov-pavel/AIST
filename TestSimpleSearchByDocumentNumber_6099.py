@@ -24,7 +24,7 @@ class TestSimpleSearchByDocumentNumber(BaseTest):
 
 		main_page.loading_is_completed()
 
-		assert document_number in main_page.ndp_get_grid_values('Документ', 1)
+		assert document_number in main_page.get_grid_values('Document', 1, main_page.main_grid)
 
 if __name__ == "__main__":
 	pytest.main()

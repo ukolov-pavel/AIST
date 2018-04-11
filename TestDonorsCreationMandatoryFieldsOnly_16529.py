@@ -59,7 +59,7 @@ class TestDonorsCreationMandatoryFieldsOnly(BaseTest):
 
 		assert aistium.get_text(elements=main_page.fio_minicard) == full_name
 
-		#assert main_page.ndp_get_grid_values('ФИО', 1) == full_name
+		#assert main_page.get_grid_values(' Fio', 1, main_page.main_grid) == full_name
 
 		assert aistium.get_value(locators_list=locators, element_name='quick_search_field') == full_name + ' '
 

@@ -34,9 +34,9 @@ class TestGridBloodGroup(BaseTest):
 
 		ind = sql_query("select Main.Nmb from (select row_number() over (order by PerC.BirthDate desc) Nmb, PerC.UniqueId from PersonCards PerC left join IdentityDocs IDoc on PerC.IdentityDocId = IDoc.UniqueId where PerC.IsDeleted != 1 and (PerC.UniqueId = '"+donorid+"' or IDoc.Number = '"+donorid+"')) Main where Main.UniqueId = '"+donorid+"'")[0][0]
 
-		assert main_page.ndp_get_grid_values('Группа', ind) == blood_group
+		assert main_page.get_grid_values('BloodGroup', ind, main_page.main_grid) == blood_group
 
-		assert convert_to_hex(main_page.ndp_get_grid_values('Группа', ind, mode='background-color')) == expected_color
+		assert convert_to_hex(main_page.get_grid_values('BloodGroup', ind, main_page.main_grid, mode='background-color')) == expected_color
 
 	@allure.step('2. МД. Регистратура. Проверка отображения группы крови в гриде. Флаг настройки "Европейский формат отображения группы крови" выставлен.')
 	@pytest.mark.parametrize('query, expected_color, test_data_set_number', get_data('data_test_grid_blood_group_b.csv'))
@@ -63,9 +63,9 @@ class TestGridBloodGroup(BaseTest):
 
 		ind = sql_query("select Main.Nmb from (select row_number() over (order by PerC.BirthDate desc) Nmb, PerC.UniqueId from PersonCards PerC left join IdentityDocs IDoc on PerC.IdentityDocId = IDoc.UniqueId where PerC.IsDeleted != 1 and (PerC.UniqueId = '"+donorid+"' or IDoc.Number = '"+donorid+"')) Main where Main.UniqueId = '"+donorid+"'")[0][0]
 
-		assert main_page.ndp_get_grid_values('Группа', ind) == blood_group
+		assert main_page.get_grid_values('BloodGroup', ind, main_page.main_grid) == blood_group
 
-		assert convert_to_hex(main_page.ndp_get_grid_values('Группа', ind, mode='background-color')) == expected_color
+		assert convert_to_hex(main_page.get_grid_values('BloodGroup', ind, main_page.main_grid, mode='background-color')) == expected_color
 
 if __name__ == "__main__":
 	pytest.main()
