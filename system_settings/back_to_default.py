@@ -20,7 +20,7 @@ cookies = s.cookies.get_dict()
 
 headers = {**constant_headers, **cookies}
 
-t = s.get(BaseTest.stand+'/Admin/Setting/EditDonor', headers=headers)
+'''t = s.get(BaseTest.stand+'/Admin/Setting/EditDonor', headers=headers)
 
 soup = BeautifulSoup(t.text, 'html.parser')
 
@@ -58,16 +58,16 @@ dic['ViewTabName'] = 'EditDonor'
 dic['NextTabName'] = ''
 
 for k, v in dic.items():
-	dic[k] = v.strip(' ')
+	dic[k] = v.strip(' ')'''
 
 
-class TurnBackToPreviousSettings(object):
+class GetCurrentSettings(object):
 	def __init__(self, url, session, headers, script):
 		self.url = url
 		self.session = session
 		self.headers = headers
 		self.script = script
-	def get_settings(self):
+	def get_raw_settings(self):
 		t = self.session.get(BaseTest.stand+self.url, headers=self.headers)
 		soup = BeautifulSoup(t.text, 'html.parser')
 		for scr in soup.findAll('script'):
@@ -78,8 +78,45 @@ class TurnBackToPreviousSettings(object):
 		settings = []
 		for sett in str(str_settings.findNextSibling()).split('\r\n'):
 			try:
-				if sett[16:22] == 'model.':
-					settings.append(sett[22:])
+				sett = sett.strip()
+				if sett.startswith('model.'):
+					settings.append(sett[6:])
 			except:
 				pass
 		return settings
+	def get_settings(self):
+		dic = {}
+		for i in self.get_raw_settings():
+			dic[i.split('=')[0][:-1]] = i.split('=')[1][1:-1]
+		for i in dic:
+			dic[i] = dic[i].strip("'")
+		return dic
+
+class TurnBackDonorSettings(GetCurrentSettings):
+	def __init__(self, session, headers, script='k3PZb1rGL2OJptx7_Wq4Yu8kZSWVRVievzK9AFvF6b01', url='/Admin/Setting/EditDonor'):
+		GetCurrentSettings.__init__(self, url, session, headers, script)
+	def get_settings(self):
+		settings = self.get_raw_settings()
+		dic = {}
+		for i in settings:
+			if i.startswith('HonorableDonorSettings') == True:
+				i = i.replace(i[22], '[', 1)
+				i = i.replace('__', '].')
+				i = i.replace(i.split('=')[0], quote_plus(i.split('=')[0]))
+			dic[i.split('=')[0][:-1]] = i.split('=')[1][1:-1]
+		for i in dic:
+			dic[i] = dic[i].strip("'")
+		dic['DonorSubscription'] = quote_plus(
+			dic['DonorSubscription'].replace('&quot;', '"').replace('\\', '\r' + '\\').replace('\\n', codecs.decode('\\n', 'unicode_escape')))
+		dic['ViewTabName'] = 'EditDonor'
+		dic['NextTabName'] = ''
+		for k, v in dic.items():
+			dic[k] = v.strip(' ')
+		return dic
+	def post_settings(self):
+		settings = self.get_settings()
+		request_body_list = []
+		for i in settings:
+			request_body_list.append(i + '=' + settings[i])
+		request_body = '&'.join(request_body_list)
+		return s.post(BaseTest.stand + self.url, data=request_body, headers=headers)
