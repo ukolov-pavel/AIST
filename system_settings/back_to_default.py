@@ -1,7 +1,7 @@
 #>>> pip install bs4
 
 import requests
-from base import BaseTest
+from base import BaseTest, Session
 from urllib.parse import quote_plus
 from bs4 import BeautifulSoup
 import codecs
@@ -62,9 +62,9 @@ for k, v in dic.items():
 
 
 class GetCurrentSettings(object):
-	def __init__(self, url, session, headers, script):
+	def __init__(self, url, headers, script):
 		self.url = url
-		self.session = session
+		self.session = Session.get()
 		self.headers = headers
 		self.script = script
 	def get_raw_settings(self):
@@ -91,6 +91,12 @@ class GetCurrentSettings(object):
 		for i in dic:
 			dic[i] = dic[i].strip("'")
 		return dic
+	def post_settings(self, settings_dic):
+		request_body_list = []
+		for i in settings_dic:
+			request_body_list.append(i + '=' + settings_dic[i])
+		request_body = '&'.join(request_body_list)
+		return self.session.post(BaseTest.stand + self.url, data=request_body, headers=headers)
 
 class TurnBackDonorSettings(GetCurrentSettings):
 	def __init__(self, session, headers, script='k3PZb1rGL2OJptx7_Wq4Yu8kZSWVRVievzK9AFvF6b01', url='/Admin/Setting/EditDonor'):
@@ -98,6 +104,8 @@ class TurnBackDonorSettings(GetCurrentSettings):
 	def get_settings(self):
 		settings = self.get_raw_settings()
 		dic = {}
+		dic['ViewTabName'] = 'EditDonor'
+		dic['NextTabName'] = ''
 		for i in settings:
 			if i.startswith('HonorableDonorSettings') == True:
 				i = i.replace(i[22], '[', 1)
@@ -108,15 +116,6 @@ class TurnBackDonorSettings(GetCurrentSettings):
 			dic[i] = dic[i].strip("'")
 		dic['DonorSubscription'] = quote_plus(
 			dic['DonorSubscription'].replace('&quot;', '"').replace('\\', '\r' + '\\').replace('\\n', codecs.decode('\\n', 'unicode_escape')))
-		dic['ViewTabName'] = 'EditDonor'
-		dic['NextTabName'] = ''
 		for k, v in dic.items():
 			dic[k] = v.strip(' ')
 		return dic
-	def post_settings(self):
-		settings = self.get_settings()
-		request_body_list = []
-		for i in settings:
-			request_body_list.append(i + '=' + settings[i])
-		request_body = '&'.join(request_body_list)
-		return s.post(BaseTest.stand + self.url, data=request_body, headers=headers)
