@@ -7,7 +7,7 @@ from bs4 import BeautifulSoup
 import codecs
 
 
-class GetCurrentSettings(object):
+class Settings(object):
 
 	def __init__(self, url, script):
 		self.url = url
@@ -54,10 +54,10 @@ class GetCurrentSettings(object):
 		return self.session.post(BaseTest.stand + self.url, data=self.request_body, headers=self.headers)
 
 
-class TurnBackDonorSettings(GetCurrentSettings):
+class DonorSettings(Settings):
 
 	def __init__(self, script='k3PZb1rGL2OJptx7_Wq4Yu8kZSWVRVievzK9AFvF6b01', url='/Admin/Setting/EditDonor'):
-		GetCurrentSettings.__init__(self, url, script)
+		Settings.__init__(self, url, script)
 
 	def get_settings(self):
 		settings = self.get_raw_settings()
@@ -77,3 +77,31 @@ class TurnBackDonorSettings(GetCurrentSettings):
 		for k, v in dic.items():
 			dic[k] = v.strip(' ')
 		return dic
+
+	def edit_donor_settings(self, **edited_settings):
+		current_settings = self.get_settings()
+		updated = {}
+		for k, v in edited_settings.items():
+			updated[quote_plus(k)] = v
+		updated_donor_settings = {**current_settings, **updated}
+		return self.post_settings(updated_donor_settings)
+
+
+class DonationsSettings(Settings):
+
+	def __init__(self, script='Q5M5c4m_DiE8N-vPmMI6ahTLJDkExwefMRrV3gZcX_U1', url='/Admin/Setting/EditDonation'):
+		Settings.__init__(self, url, script)
+
+	def get_settings(self):
+		settings = self.get_raw_settings()
+		dic = {}
+		dic['ViewTabName'] = 'EditDonation'
+		dic['NextTabName'] = ''
+		for i in settings:
+			dic[i.split('=')[0][:-1]] = i.split('=')[1][1:-1]
+		for i in dic:
+			dic[i] = dic[i].strip("'")
+		for i in range(36):
+			dic[quote_plus('EditDelays[' + str(i) + '].Id')] = ''
+			dic[quote_plus('EditDelays[' + str(i) + '].Days')] = ''
+		
