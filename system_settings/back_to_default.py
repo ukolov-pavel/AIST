@@ -104,4 +104,3 @@ class DonationsSettings(Settings):
 		for i in range(36):
 			dic[quote_plus('EditDelays[' + str(i) + '].Id')] = ''
 			dic[quote_plus('EditDelays[' + str(i) + '].Days')] = ''
-		
