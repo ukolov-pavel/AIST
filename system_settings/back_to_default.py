@@ -1,10 +1,10 @@
 #>>> pip install bs4
 
-import requests
 from base import BaseTest, Session
 from urllib.parse import quote_plus
 from bs4 import BeautifulSoup
 import codecs
+import json
 
 
 class Settings(object):
@@ -20,7 +20,7 @@ class Settings(object):
 		self.cookies = self.session.cookies.get_dict()
 		self.headers = {**self.headers, **self.cookies}
 
-	def get_raw_settings(self):
+	def get_raw_settings(self, mode='model'):
 		t = self.session.get(BaseTest.stand+self.url, headers=self.headers)
 		soup = BeautifulSoup(t.text, 'html.parser')
 		for scr in soup.findAll('script'):
@@ -29,14 +29,17 @@ class Settings(object):
 			else:
 				pass
 		settings = []
-		for sett in str(str_settings.findNextSibling()).split('\r\n'):
-			try:
-				sett = sett.strip()
-				if sett.startswith('model.'):
-					settings.append(sett[6:])
-			except:
-				pass
-		return settings
+		if mode == 'model':
+			for sett in str(str_settings.findNextSibling()).split('\r\n'):
+				try:
+					sett = sett.strip()
+					if sett.startswith('model.'):
+						settings.append(sett[6:])
+				except:
+					pass
+			return settings
+		else:
+			return str_settings
 
 	def get_settings(self):
 		dic = {}
@@ -94,6 +97,14 @@ class DonationsSettings(Settings):
 
 	def get_settings(self):
 		settings = self.get_raw_settings()
+		str_settings = self.get_raw_settings('numbers')
+		str_numbers = str_settings.find_next_sibling().get_text().split('\r\n')[4].strip().strip('DonationTabDiv.Init')[1:-2]
+		json_numbers = json.loads(str_numbers)
+		days = []
+		for y in range(len(json_numbers)):
+			for i in json_numbers[y]['Days']:
+				if int(i) <= 5:
+					days.append(dict(Days=json_numbers[y]['Days'][i]['Count'], Id=json_numbers[y]['Days'][i]['Id']))
 		dic = {}
 		dic['ViewTabName'] = 'EditDonation'
 		dic['NextTabName'] = ''
@@ -102,5 +113,6 @@ class DonationsSettings(Settings):
 		for i in dic:
 			dic[i] = dic[i].strip("'")
 		for i in range(36):
-			dic[quote_plus('EditDelays[' + str(i) + '].Id')] = ''
-			dic[quote_plus('EditDelays[' + str(i) + '].Days')] = ''
+			dic[quote_plus('EditDelays[' + str(i) + '].Id')] = str(days[i]['Id'])
+			dic[quote_plus('EditDelays[' + str(i) + '].Days')] = str(days[i]['Days'])
+		return dic
